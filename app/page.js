@@ -6,7 +6,9 @@ async function getPrices() {
   const text = await res.text();
   const rows = text.split('\n').slice(1);
   return rows.map(row => {
-    const [item, price] = row.split(',');
+        const cols = row.split(',');
+    const item = cols[1]; // العمود B = الاسم
+    const price = cols[2]; // العمود C = السعر
     return { item, price };
   }).filter(p => p.item);
 }

@@ -1,44 +1,30 @@
-export const revalidate = 0;
+export const revalidate = 60;
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSWM57Ljz7S2NUxvbGjco1sacdqEz1vs2GmI5vueeG4k48ASO2k3gT7XUyWs1KRIDanqyZFXY9TTaUR/pub?output=csv";
 
-async function getPrices() {
-  const SHEET_URL = process.env.SHEET_URL;
-  if (!SHEET_URL) return [];
-  
-  const res = await fetch(SHEET_URL, { cache: 'no-store' });
-  const text = await res.text();
-  const rows = text.split('\n').slice(1); // نتخطى سطر العناوين
-  
-  return rows.map(row => {
-    const cols = row.split(',');
-    const item = cols[1]?.trim(); // العمود B = الاسم
-    const price = cols[2]?.trim(); // العمود C = السعر
-    return { item, price };
-  }).filter(p => p.item && p.price); // نتأكد مافي سطور فاضية
+async function getPrices(){
+  const r=await fetch(SHEET_URL,{cache:'no-store'});
+  const t=await r.text();
+  return t.split('\n').slice(1).filter(Boolean).map(x=>{const[a,b]=x.split(',');return{item:a?.trim(),price:b?.trim()}})
 }
 
-export default async function Home() {
-  const prices = await getPrices();
-  
-  return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-6">
-      <div className="w-full max-w-xl mx-auto">
-        <h2 className="text-4xl font-bold mb-6 text-center">🔥 اسعار العملات اليوم</h2>
-        
-        {prices.length === 0? (
-          <p className="text-center text-gray-400">جاري تحميل الاسعار...</p>
-        ) : (
-          <div className="space-y-3">
-            {prices.map((p, i) => (
-              <div key={i} className="bg-white/10 p-4 rounded-xl flex justify-between text-lg backdrop-blur-sm border-white/20">
-                <span>{p.item}</span>
-                <span className="font-bold text-yellow-400">{p.price} جنيه</span>
-              </div>
-            ))}
-          </div>
-        )}
-        
-        <p className="text-center text-xs text-gray-500 mt-6">تاريخ: 26/06/2026</p>
-      </div>
-    </main>
-  );
-            }
+export default async function Home(){
+  const d=await getPrices();
+  return(<>
+    <style>{`.title{font-size:32px;font-weight:800;text-align:center;margin:0 0 24px;display:flex;align-items:center;justify-content:center;gap:8px}
+    .grid{display:grid;gap:14px}
+    .card{background:rgba(17,24,39,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);padding:18px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;transition:.3s}
+    .card:hover{transform:translateY(-2px);border-color:rgba(251,191,36,.4)}
+    .name{font-size:17px;font-weight:600}
+    .val{font-size:22px;font-weight:800;color:#fbbf24;text-align:left}
+    .unit{font-size:14px;color:#fbbf24;display:block}`}</style>
+    <h1 className="title">اسعار 🔥<br/>التصميم اليوم</h1>
+    <div className="grid">
+      {d.map((s,i)=>(
+        <div key={i} className="card">
+          <span className="name">{s.item}</span>
+          <div className="val">{s.price}<span className="unit">دولار</span></div>
+        </div>
+      ))}
+    </div>
+  </>)}
+}

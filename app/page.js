@@ -9,22 +9,24 @@ async function getPrices(){
 
 export default async function Home(){
   const d=await getPrices();
-  return(<>
-    <style>{`.title{font-size:32px;font-weight:800;text-align:center;margin:0 0 24px;display:flex;align-items:center;justify-content:center;gap:8px}
-    .grid{display:grid;gap:14px}
-    .card{background:rgba(17,24,39,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);padding:18px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;transition:.3s}
-    .card:hover{transform:translateY(-2px);border-color:rgba(251,191,36,.4)}
-    .name{font-size:17px;font-weight:600}
-    .val{font-size:22px;font-weight:800;color:#fbbf24;text-align:left}
-    .unit{font-size:14px;color:#fbbf24;display:block}`}</style>
-    <h1 className="title">اسعار 🔥<br/>التصميم اليوم</h1>
-    <div className="grid">
-      {d.map((s,i)=>(
-        <div key={i} className="card">
-          <span className="name">{s.item}</span>
-          <div className="val">{s.price}<span className="unit">دولار</span></div>
-        </div>
-      ))}
-    </div>
-  </>)}
+  return(
+    <>
+      <style>{`.title{font-size:32px;font-weight:800;text-align:center;margin:0 0 24px;display:flex;align-items:center;justify-content:center;gap:8px}
+      .grid{display:grid;gap:14px}
+      .card{background:rgba(17,24,39,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);padding:18px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;transition:.3s}
+      .card:hover{transform:translateY(-2px);border-color:rgba(251,191,36,.4)}
+      .name{font-size:17px;font-weight:600}
+      .val{font-size:22px;font-weight:800;color:#fbbf24;text-align:left}
+      .unit{font-size:14px;color:#fbbf24;display:block}`}</style>
+      <h1 className="title">اسعار 🔥<br/>التصميم اليوم</h1>
+      <div className="grid">
+        {d.map((s,i)=>(
+          <div key={i} className="card">
+            <span className="name">{s.item}</span>
+            <div className="val">{s.price}<span className="unit">دولار</span></div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
 }

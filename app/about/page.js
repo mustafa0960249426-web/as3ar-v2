@@ -1,12 +1,12 @@
-    export default function About() {
-      return (
-        <div>
-          <h2 className="text-4xl font-bold mb-4">من نحن</h2>
-          <p className="text-lg leading-8 text-white/80">
-            موقع اسعار هو منصتك الاولى لمعرفة احدث الاسعار بطريقة سهلة وسريعة. 
-            هدفنا نوفر ليك كل المعلومات المهمة في مكان واحد بتصميم مريح للعين.
-          </p>
-        </div>
-      );
-    }
-.
+export default function عن() {
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-4">من نحن</h1>
+      <p className="text-gray-300 leading-7">
+        موقع جد هو اول موقع سوداني متخصص في اسعار خدمات التصميم. 
+        بنوفر ليك اسعار واضحة ومحدثة يوميا من قوقل شيت مباشر. 
+        هدفنا نخليك تعرف سعر شغلك قبل تبدا.
+      </p>
+    </div>
+  )
+}

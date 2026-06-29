@@ -1,25 +1,10 @@
-export const revalidate = 60;
-
-async function getPrices() {
-  const SHEET_URL = process.env.SHEET_URL;
-  if (!SHEET_URL) return [{item: "اربط SHEET_URL في Vercel", price: ""}];
-  
-  try {
-    const res = await fetch(SHEET_URL, { cache: 'no-store' });
-    if (!res.ok) throw new Error("فشل تحميل الشيت");
-    const text = await res.text();
-    const rows = text.split('\n').slice(1).filter(Boolean); // نتخطى اول سطر item,price
-    return rows.map(r => {
-      const [item, price] = r.split(',');
-      return { item: item?.trim(), price: price?.trim() };
-    });
-  } catch (e) {
-    return [{item: "خطأ: اتأكد من رابط الشيت", price: ""}];
-  }
-}
-
-export default async function Home() {
-  const الاسعار = await getPrices();
+export default function Home() {
+  const الاسعار = [
+    { item: "تصميم لوقو", price: "60$" },
+    { item: "تصميم بوست انستا", price: "25$" },
+    { item: "تصميم غلاف فيس", price: "40$" },
+    { item: "تصميم منيو مطعم", price: "120$" },
+  ];
 
   return (
     <div className="max-w-md mx-auto">
